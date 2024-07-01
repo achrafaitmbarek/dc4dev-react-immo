@@ -17,22 +17,30 @@ const AdvertList = ({ advertList, fetchAllAdverts }: PropsAdvertList) => {
         }
     }
 
-    return ( 
+    return (
         <ul>
             {advertList.map((advert: AdvertType) => (
-                <li key={advert.id}>{advert.title}
-                    
+                <li key={advert.id} style={{ color: 'black' }}>{advert.title}
+
                     <Link to={`/adverts/${advert.id}`}>
                         Learn more
                     </Link>
 
-                    <button onClick={() => handleDelete(advert.id)}>
+                    <button onClick={() => handleDelete(advert.id)} style={{
+                        padding: "5px 10px",
+                        marginLeft: "10px",
+                        backgroundColor: "#ff4d4d",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                    }}>
                         delete
                     </button>
                 </li>
             ))}
         </ul>
-     );
+    );
 }
- 
+
 export default AdvertList;

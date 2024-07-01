@@ -1,9 +1,7 @@
 import { useState } from "react";
-import AuthService from "../services/auth.service"; 
-
+import AuthService from "../services/auth.service";
 
 const Signup = () => {
-    /* utm */
     const [credentials, setCredentials] = useState({ email: '', password: '' });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,52 +12,42 @@ const Signup = () => {
         e.preventDefault();
         try {
             const data = await AuthService.signup(credentials);
-            console.log("handleSubmit data : ", data);
+            console.log("handleSubmit data: ", data);
         } catch (error) {
-            console.log("handleSubmit error : ", error);
+            console.log("handleSubmit error: ", error);
         }
     };
 
     return (
-        <div>
-            <h1>Signup</h1>
+        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '50px', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <h1 style={{ textAlign: 'center', color: '#333', marginBottom: '20px' }}>Signup</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                 <div>
-                    <input 
-                        type="email" 
-                        name="email" 
-                        placeholder="email" 
-                        value={credentials.email} 
-                        onChange={handleChange} 
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={credentials.email}
+                        onChange={handleChange}
+                        style={{ width: '100%', padding: '15px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px' }}
                     />
                 </div>
                 <div>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="password" 
-                        value={credentials.password} 
-                        onChange={handleChange} 
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={credentials.password}
+                        onChange={handleChange}
+                        style={{ width: '100%', padding: '15px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px' }}
                     />
                 </div>
-                <input type="submit" value="Signup" />
-            </form>
-        </div>
-    );
-
-    return (
-        <div>
-            <h1>Signup</h1>
-
-            <form>
-                <div>
-                    <input type="email" name="email" placeholder="email" />
-                </div>
-                <div>
-                    <input type="password" name="password" placeholder="password" />
-                </div>
-                <input type="submit" value="Signup" />
+                <input
+                    type="submit"
+                    value="Signup"
+                    style={{ padding: '15px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', textAlign: 'center' }}
+                />
             </form>
         </div>
     );

@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import AuthService from '../services/auth.service';
+import { useEffect, useState } from "react";
+import AuthService from "../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  // const { login } = useAuth();
+    const navigate = useNavigate();
 
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
+    useEffect(() => {
+        if (localStorage.getItem("access_token")) {
+            navigate("/");
+        }
+    }, [navigate]);
+
+    const [credentials, setCredentials] = useState({ email: "", password: "" });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -15,37 +21,46 @@ const Signin = () => {
         e.preventDefault();
         try {
             await AuthService.signin(credentials);
+            if (localStorage.getItem("access_token")) {
+                navigate("/");
+            }
         } catch (error) {
-            console.log("handleSubmit error : ", error);
+            console.log("handleSubmit error: ", error);
         }
     };
 
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-          <div>
-              <input 
-                  type="email" 
-                  name="email" 
-                  placeholder="email" 
-                  value={credentials.email} 
-                  onChange={handleChange} 
-              />
-          </div>
-          <div>
-              <input 
-                  type="password" 
-                  name="password" 
-                  placeholder="password" 
-                  value={credentials.password} 
-                  onChange={handleChange} 
-              />
-          </div>
-          <input type="submit" value="Signin" />
-      </form>
-    </div>
-  );
+    return (
+        <div style={{ maxWidth: '400px', margin: '0 auto', padding: '50px', backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+            <h1 style={{ textAlign: 'center', color: '#333', marginBottom: '20px' }}>Login</h1>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={credentials.email}
+                        onChange={handleChange}
+                        style={{ width: '100%', padding: '15px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px' }}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={credentials.password}
+                        onChange={handleChange}
+                        style={{ width: '100%', padding: '15px', borderRadius: '4px', border: '1px solid #ccc', fontSize: '16px' }}
+                    />
+                </div>
+                <input
+                    type="submit"
+                    value="Signin"
+                    style={{ padding: '15px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', textAlign: 'center' }}
+                />
+            </form>
+        </div>
+    );
 };
 
 export default Signin;
